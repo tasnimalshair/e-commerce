@@ -16,6 +16,7 @@
         "laravel/scout": "^10.0",
         "laravel/tinker": "^2.10.1",
         "predis/predis": "^2.0",
+        "spatie/laravel-medialibrary": "^11.13",
         "spatie/laravel-permission": "^6.21",
         "stripe/stripe-php": "^13.0"
     },

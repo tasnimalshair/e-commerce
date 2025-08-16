@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Product extends Model
+class Product extends Model implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\ProductFactory> */
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, InteractsWithMedia;
 
     protected $fillable = ['name', 'description', 'price', 'image', 'stock', 'category_id', 'seller_id'];
 
@@ -26,6 +28,11 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function varients()
+    {
+        return $this->hasMany(Varient::class);
     }
 
     protected static function boot()

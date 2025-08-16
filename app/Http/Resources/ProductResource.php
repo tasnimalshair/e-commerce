@@ -20,7 +20,9 @@ class ProductResource extends JsonResource
             'slug'        => $this->slug,
             'description' => $this->description,
             'price'       => $this->price,
-            'image'       => asset('storage/' . $this->image), 
+            'images'       => $this->getMedia('products')->map(function ($media) {
+                return $media->getUrl();
+            }),
             'stock'       => $this->stock,
             'category'    => new CategoryResource($this->whenLoaded('category')),
             'seller'    => new UserResource($this->whenLoaded('seller')),
