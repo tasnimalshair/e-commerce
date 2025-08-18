@@ -19,25 +19,14 @@ class Category extends Model
         return 'slug';
     }
 
-    protected static function boot()
+    protected static function booted()
     {
-        parent::boot();
-
         static::creating(function ($category) {
             $category->slug = Str::slug($category->name);
         });
         static::updating(function ($category) {
             $category->slug = Str::slug($category->name);
         });
-    }
-
-    public function sluggable()
-    {
-        return [
-            'slug' => [
-                'source' => 'name'
-            ]
-        ];
     }
 
     public function products()

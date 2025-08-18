@@ -52,4 +52,18 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function cart()
+    {
+        return $this->hasOne(Cart::class);
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($user) {
+            Cart::create([
+                'user_id' => $user->id,
+            ]);
+        });
+    }
 }

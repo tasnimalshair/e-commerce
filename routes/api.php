@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\Variant\VariantController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -37,4 +39,24 @@ Route::middleware(['auth:sanctum', 'role:admin|seller'])->group(function () {
     Route::post('products', [ProductController::class, 'store']);
     Route::put('products/{product}', [ProductController::class, 'update']);
     Route::delete('products/{product}', [ProductController::class, 'destroy']);
+});
+
+
+# Variants
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::resource('variants', VariantController::class)->only(['index', 'show']);
+});
+
+Route::middleware(['auth:sanctum', 'role:admin|seller'])->group(function () {
+    Route::resource('variants', VariantController::class)->except(['index', 'show']);
+});
+
+
+# Carts
+// Route::middleware(['auth:sanctum'])->group(function () {
+//     Route::resource('carts', VariantController::class)->only(['index', 'show']);
+// });
+
+Route::middleware(['auth:sanctum', 'role:admin|buyer'])->group(function () {
+    Route::resource('carts', CartController::class);
 });

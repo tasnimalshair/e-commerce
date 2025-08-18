@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Varient extends Model
+class Variant extends Model
 {
     /** @use HasFactory<\Database\Factories\VarientFactory> */
     use HasFactory, SoftDeletes;
@@ -24,12 +24,10 @@ class Varient extends Model
         return $this->belongsTo(Product::class);
     }
 
-    protected static function boot()
+    protected static function booted()
     {
-        parent::boot();
-
         static::creating(function ($varient) {
-            $varient->slug = Str::slug($varient->name);
+            $varient->slug = Str::slug($varient->product->name);
         });
         static::updating(function ($varient) {
             $varient->slug = Str::slug($varient->product->name);

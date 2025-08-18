@@ -32,13 +32,11 @@ class Product extends Model implements HasMedia
 
     public function varients()
     {
-        return $this->hasMany(Varient::class);
+        return $this->hasMany(Variant::class);
     }
 
-    protected static function boot()
+    protected static function booted()
     {
-        parent::boot();
-
         static::creating(function ($product) {
             $product->slug = Str::slug($product->name);
         });
