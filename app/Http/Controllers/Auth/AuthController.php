@@ -8,6 +8,7 @@ use App\Http\Requests\User\LoginUserRequest;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Services\CartService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +16,7 @@ use Spatie\Permission\Models\Role;
 
 class AuthController extends Controller
 {
-       use ApiResponse;
+    use ApiResponse;
 
     public function register(StoreUserRequest $request)
     {
@@ -23,10 +24,15 @@ class AuthController extends Controller
         $data = $request->validated();
         $data['password'] = Hash::make($data['password']);
         $user = User::create([
-            'name'=> $data['name'],
-            'email'=> $data['email'],
-            'password'=> $data['password'],
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => $data['password'],
         ]);
+
+        // Merge carts if exists
+        $cartService = new CartService();
+        $cartService->mergeCarts($request);
+
 
         $token = $user->createToken('token_0')->plainTextToken;
 
@@ -68,4 +74,3 @@ class AuthController extends Controller
         return $this->successMessage('Logged Out Successfully!', 200);
     }
 }
-

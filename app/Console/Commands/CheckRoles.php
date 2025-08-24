@@ -27,3 +27,4 @@ class CheckRoles extends Command
         }
     }
 }
+

@@ -47,3 +47,4 @@ class CreateAdmin extends Command
         $this->line("Name: {$name}");
     }
 }
+

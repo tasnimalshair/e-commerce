@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Cart\CartController;
+use App\Http\Controllers\CartItem\CartItemController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Variant\VariantController;
@@ -52,11 +53,18 @@ Route::middleware(['auth:sanctum', 'role:admin|seller'])->group(function () {
 });
 
 
+Route::post('carts', [CartController::class, 'store']);
 # Carts
-// Route::middleware(['auth:sanctum'])->group(function () {
-//     Route::resource('carts', VariantController::class)->only(['index', 'show']);
-// });
-
 Route::middleware(['auth:sanctum', 'role:admin|buyer'])->group(function () {
-    Route::resource('carts', CartController::class);
+    // Route::resource('carts', CartController::class);
+    Route::get('carts/{cart}', [CartController::class, 'show']);
+    Route::post('carts/{cart}', [CartController::class, 'destroy']);
 });
+
+# CartItems
+Route::middleware(['auth:sanctum', 'role:admin|buyer'])->group(function () {
+    Route::resource('cartItems', CartItemController::class);
+    Route::delete('cartItems', [CartItemController::class, 'clear']);
+});
+
+// الراوتس بين اليوزر والزائر

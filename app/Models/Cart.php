@@ -12,7 +12,7 @@ class Cart extends Model
 {
     /** @use HasFactory<\Database\Factories\CartFactory> */
     use HasFactory, SoftDeletes;
-    protected $fillable = ['user_id'];
+    protected $fillable = ['user_id', 'uuid'];
 
     public function user()
     {
@@ -21,6 +21,13 @@ class Cart extends Model
 
     public function cart_items()
     {
-        return $this->belongsTo(CartItem::class);
+        return $this->hasMany(CartItem::class);
+    }
+
+    protected static function booted()
+    {
+        static::creating(function ($cart) {
+            $cart->uuid = Str::uuid();
+        });
     }
 }

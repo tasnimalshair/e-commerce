@@ -41,3 +41,4 @@ class AssignAdminRole extends Command
         $this->info("Admin role assigned successfully to {$user->name} ({$email})!");
     }
 }
+

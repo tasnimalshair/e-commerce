@@ -18,10 +18,9 @@ class CartSeeder extends Seeder
         Cart::truncate();
         Schema::enableForeignKeyConstraints();
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             Cart::create([
-                'name' => fake()->word(),
-                'user_id' => rand(2, 7)
+                'user_id' => $i +1 
             ]);
         }
     }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\CartItem;
+namespace App\Http\Requests\Cart;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCartItemQuantityRequest extends FormRequest
+class StoreCartRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class UpdateCartItemQuantityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'quantity' => ['required', 'integer', 'min:1'],
+            'user_id'
         ];
     }
 }
